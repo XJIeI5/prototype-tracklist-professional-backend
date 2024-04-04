@@ -29,7 +29,7 @@ def login():
 
 def main():
     db_session.global_init("db/data.db")
-    app.run()
+    app.run(debug=True)
 
 
 if __name__ == '__main__':
