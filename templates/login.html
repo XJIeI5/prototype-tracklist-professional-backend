@@ -1,24 +1,115 @@
 {% extends "base.html" %} {% block content %}
-<h1>Клиент</h1>
-<form action="" method="post" class="form">
-  <div class="field">
-    <label class="field-label" for="phone"
-      ><span style="color: red">*</span> ФИО:
-    </label>
-    <input class="field-input" type="tel" name="phone" id="phone" required />
+<seciton class="form-wrapper">
+  <h1>Клиент</h1>
+  <form action="" method="post" class="form">
+    <div class="field">
+      <label class="field-label" for="phone"
+        ><span style="color: red">*</span> ФИО:
+      </label>
+      <input class="field-input" type="tel" name="phone" id="phone" required />
+    </div>
+    <div class="field">
+      <label class="field-label" for="phone"
+        ><span style="color: red">*</span> Phone:
+      </label>
+      <input class="field-input" type="tel" name="phone" id="phone" required />
+    </div>
+    <div class="field">
+      <label class="field-label" for="email"
+        ><span style="color: red">*</span> Email:
+      </label>
+      <input
+        class="field-input"
+        type="email"
+        name="email"
+        id="email"
+        required
+      />
+    </div>
+    <input type="submit" class="submit-btn" value="Поиск" />
+  </form>
+</seciton>
+<section class="calls">
+  <h1>Ваши заказы</h1>
+  <div class="accordion">
+    <section class="accordion-header">
+      Тестовый заказ 1 <span class="date">от 18 августа</span>
+    </section>
+    <section class="panel">
+      <span class="info">Ожидаемая дата: None</span>
+      <span class="info">Оплачено</span>
+      <section class="image">
+        <p class="count-product">1 товар</p>
+        <img
+          src="https://detalneftehim.ru/wp-content/uploads/2020/11/bolty.png"
+          alt="заказы"
+        />
+      </section>
+    </section>
   </div>
-  <div class="field">
-    <label class="field-label" for="phone"
-      ><span style="color: red">*</span> Phone:
-    </label>
-    <input class="field-input" type="tel" name="phone" id="phone" required />
+  <div class="accordion">
+    <section class="accordion-header">
+      Тестовый заказ 2 <span class="date">от 18 августа</span>
+    </section>
+    <section class="panel">
+      <span class="info">Ожидаемая дата: None</span>
+      <span class="info">Оплачено</span>
+      <section class="image">
+        <p class="count-product">1 товар</p>
+        <img
+          src="https://detalneftehim.ru/wp-content/uploads/2020/11/bolty.png"
+          alt="заказы"
+        />
+      </section>
+    </section>
   </div>
-  <div class="field">
-    <label class="field-label" for="email"
-      ><span style="color: red">*</span> Email:
-    </label>
-    <input class="field-input" type="email" name="email" id="email" required />
+  <div class="accordion">
+    <section class="accordion-header">
+      Тестовый заказ 3 <span class="date">от 18 августа</span>
+    </section>
+    <section class="panel">
+      <span class="info">Ожидаемая дата: None</span>
+      <span class="info">Оплачено</span>
+      <section class="image">
+        <p class="count-product">1 товар</p>
+        <img
+          src="https://detalneftehim.ru/wp-content/uploads/2020/11/bolty.png"
+          alt="заказы"
+        />
+      </section>
+    </section>
   </div>
-  <input type="submit" class="submit-btn" value="Поиск" />
-</form>
+  <div class="accordion">
+    <section class="accordion-header">
+      Тестовый заказ 4 <span class="date">от 18 августа</span>
+    </section>
+    <section class="panel">
+      <span class="info">Ожидаемая дата: None</span>
+      <span class="info">Оплачено</span>
+      <section class="image">
+        <p class="count-product">1 товар</p>
+        <img
+          src="https://detalneftehim.ru/wp-content/uploads/2020/11/bolty.png"
+          alt="заказы"
+        />
+      </section>
+    </section>
+  </div>
+  <script>
+    var acc = document.getElementsByClassName("accordion-header");
+    var i;
+
+    for (i = 0; i < acc.length; i++) {
+      acc[i].addEventListener("click", function () {
+        this.classList.toggle("active");
+        var panel = this.nextElementSibling;
+        if (panel.style.maxHeight) {
+          panel.style.maxHeight = null;
+        } else {
+          panel.style.maxHeight = panel.scrollHeight + "px";
+        }
+      });
+    }
+  </script>
+</section>
 {% endblock %}

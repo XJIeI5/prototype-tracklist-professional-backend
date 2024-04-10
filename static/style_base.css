@@ -231,3 +231,7 @@ header > .nav {
   color: white;
   transition: all 0.2s ease;
 }
+
+.block-content {
+  display: flex;
+}

@@ -19,6 +19,10 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='style_form.css') }}"
     />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style_call.css') }}"
+    />
   </head>
   <body>
     <div class="pre-header">
@@ -114,7 +118,7 @@
 
     <!-- Begin page content -->
     <main class="content">
-      {% block content %} {% endblock %}
+      <div class="block-content">{% block content %} {% endblock %}</div>
       <footer class="footer-wrapper">
         <section class="item">
           <span class="footer-icon">
