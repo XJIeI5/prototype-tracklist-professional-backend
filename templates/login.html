@@ -1,15 +1,24 @@
 {% extends "base.html" %} {% block content %}
-<form action="" method="post">
-  <dib>
-    <label for="phone">Phone:</label>
-    <input type="tel" name="phone" id="phone" required />
-  </dib>
-  <div>
-    <label for="email">Email:</label>
-    <input type="email" name="email" id="email" required />
+<h1>Клиент</h1>
+<form action="" method="post" class="form">
+  <div class="field">
+    <label class="field-label" for="phone"
+      ><span style="color: red">*</span> ФИО:
+    </label>
+    <input class="field-input" type="tel" name="phone" id="phone" required />
   </div>
-  <div>
-    <input type="submit" value="SEND" />
+  <div class="field">
+    <label class="field-label" for="phone"
+      ><span style="color: red">*</span> Phone:
+    </label>
+    <input class="field-input" type="tel" name="phone" id="phone" required />
   </div>
+  <div class="field">
+    <label class="field-label" for="email"
+      ><span style="color: red">*</span> Email:
+    </label>
+    <input class="field-input" type="email" name="email" id="email" required />
+  </div>
+  <input type="submit" class="submit-btn" value="Поиск" />
 </form>
 {% endblock %}

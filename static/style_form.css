@@ -1,0 +1,39 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #f2f1f1;
+  width: 670px;
+  height: 350px;
+  padding: 20px 40px;
+  align-items: center;
+}
+
+.form .field {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.form .field .field-label {
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+
+.form .field .field-input {
+  height: 36px;
+  font-size: 16px;
+}
+
+.form .submit-btn {
+  background-color: #9d0035;
+  outline: none;
+  border: none;
+  border-radius: 0px;
+  width: 450px;
+  height: 40px;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  font-weight: 450;
+}
