@@ -2,6 +2,7 @@ import flask
 from sqlalchemy import exc
 from data import db_session
 from data import users
+from mock import calls_test
 
 
 app = flask.Flask(__name__)
@@ -13,7 +14,7 @@ def index():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if flask.request.method == "GET":
-        return flask.render_template("login.html")
+        return flask.render_template("login.html", calls=calls_test)
     
     email, phone = flask.request.form["email"], flask.request.form["phone"]
     sess = db_session.create_session()

@@ -7,6 +7,9 @@
 }
 
 .accordion-header {
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none;
   background-color: #f2f1f1;
   color: #444;
   cursor: pointer;
@@ -31,7 +34,7 @@
   font-size: 14px;
 }
 
-.panel .image {
+.panel .images {
   background-color: white;
   padding: 6px;
   border-radius: 14px;
@@ -40,14 +43,14 @@
   -moz-box-shadow: 4px 6px 28px -13px rgba(0, 0, 0, 0.78);
 }
 
-.panel .image .count-product {
+.panel .images .count-product {
   color: #777777;
   font-size: 14px;
   font-weight: bold;
   margin: 0;
 }
 
-.panel .image img {
+.panel .images img {
   height: 80px;
   width: 80px;
 }

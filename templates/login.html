@@ -31,7 +31,26 @@
 </seciton>
 <section class="calls">
   <h1>Ваши заказы</h1>
+  {% for item in calls %}
   <div class="accordion">
+    <section class="accordion-header">
+      {{ item.name }} <span class="date">от {{ item.dateCreate }}</span>
+    </section>
+    <section class="panel">
+      <span class="info">Ожидаемая дата: {{ item.dateExpected }}</span>
+      <span class="info"
+        >{% if item.paid %} Оплачено {% else %} Не оплачено {% endif %}
+      </span>
+      <section class="images">
+        <p class="count-product">{{ item.productTotals }} товар</p>
+        {% for imgUrl in item.imageUrls %}
+        <img src="{{ imgUrl }}" alt="Товар" />
+        {% endfor %}
+      </section>
+    </section>
+  </div>
+  {% endfor %}
+  <!-- <div class="accordion">
     <section class="accordion-header">
       Тестовый заказ 1 <span class="date">от 18 августа</span>
     </section>
@@ -46,55 +65,7 @@
         />
       </section>
     </section>
-  </div>
-  <div class="accordion">
-    <section class="accordion-header">
-      Тестовый заказ 2 <span class="date">от 18 августа</span>
-    </section>
-    <section class="panel">
-      <span class="info">Ожидаемая дата: None</span>
-      <span class="info">Оплачено</span>
-      <section class="image">
-        <p class="count-product">1 товар</p>
-        <img
-          src="https://detalneftehim.ru/wp-content/uploads/2020/11/bolty.png"
-          alt="заказы"
-        />
-      </section>
-    </section>
-  </div>
-  <div class="accordion">
-    <section class="accordion-header">
-      Тестовый заказ 3 <span class="date">от 18 августа</span>
-    </section>
-    <section class="panel">
-      <span class="info">Ожидаемая дата: None</span>
-      <span class="info">Оплачено</span>
-      <section class="image">
-        <p class="count-product">1 товар</p>
-        <img
-          src="https://detalneftehim.ru/wp-content/uploads/2020/11/bolty.png"
-          alt="заказы"
-        />
-      </section>
-    </section>
-  </div>
-  <div class="accordion">
-    <section class="accordion-header">
-      Тестовый заказ 4 <span class="date">от 18 августа</span>
-    </section>
-    <section class="panel">
-      <span class="info">Ожидаемая дата: None</span>
-      <span class="info">Оплачено</span>
-      <section class="image">
-        <p class="count-product">1 товар</p>
-        <img
-          src="https://detalneftehim.ru/wp-content/uploads/2020/11/bolty.png"
-          alt="заказы"
-        />
-      </section>
-    </section>
-  </div>
+  </div> -->
   <script>
     var acc = document.getElementsByClassName("accordion-header");
     var i;
