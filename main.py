@@ -25,7 +25,7 @@ def index():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if flask.request.method == "GET":
-        return flask.render_template("login.html", calls=calls_test)
+        return flask.render_template("login.html", calls=[])
     
     email, phone, name = flask.request.form["email"], int(flask.request.form["phone"]), flask.request.form["name"]
     sess = db_session.create_session()
