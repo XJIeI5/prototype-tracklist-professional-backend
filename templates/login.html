@@ -38,7 +38,7 @@
   {% for item in calls %}
   <div class="accordion">
     <section class="accordion-header">
-      {{ item.name }} <span class="date">от {{ item.dateCreate }}</span>
+      Заказ № {{ item.id }} <span class="date">от {{ item.dateCreate }}</span>
     </section>
     <section class="panel">
       <span class="info">Ожидаемая дата: {{ item.dateExpected }}</span>
