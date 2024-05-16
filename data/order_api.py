@@ -15,7 +15,7 @@ orders_blueprint = flask.Blueprint(
 
 def parse_stages(stages: str) -> dict:
     parsed_stages = {}
-    for i in stages.split(','):
+    for i in stages.split(';'):
         parsed_stages[int(i.split(':')[0])] = int(i.split(':')[1])
     return parsed_stages
 
@@ -27,22 +27,23 @@ def make_stages(parsed_stages: dict) -> str:
 
 @orders_blueprint.route('/api/reg_order', methods=['POST'])
 def register_order(order_id):
-    order_id = request.json['order_id']
-    try:
-        order_id = int(order_id)
-    except ValueError:
-        return make_response(jsonify({'error': 'Bad Request'}), 400)
-
-    if not request.json:
-        return make_response(jsonify({"error": 'Bad Request'}), 400)
-
     db_sess = db_session.create_session()
-    order = db_sess.query(Order).get(order_id)
-
-    if not order:
-        return make_response(jsonify({'error': 'Not found'}), 404)
-    data = request.json()
-    return None #   to do: order creation
+    password = request.json["password"]
+    if password_ok(password):
+        order = Order(
+            modelId=request.json['modelId'],
+            userId=request.json["userId"],
+            amount=request.json["amount"],
+            dataCreate=request.json["dataCreate"],
+            dataExpected=request.json["dataExpected"],
+            paid=request.json["paid"],
+            stages=request.json["stages"]
+        )
+        db_sess.add(order)
+        db_sess.commit()
+        return jsonify({"succes": f"order id: {order.id}"})
+    else:
+        return jsonify({"error": 'Incorrect Password'})
 
 
 @orders_blueprint.route("/api/upd_order", methods=['PUT'])
