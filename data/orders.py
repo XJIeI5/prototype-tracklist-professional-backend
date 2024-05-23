@@ -7,7 +7,7 @@ def parse_stages(stages: str) -> dict:
     res = {}
     for stage in stages.split(";"):
         s = stage.split(":")
-        stage_name, amount_on_stage = s[0], int(s[1])
+        stage_name, amount_on_stage = int(s[0]), int(s[1])
         res[stage_name] = amount_on_stage
     return res
 
