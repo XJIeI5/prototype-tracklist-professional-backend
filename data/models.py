@@ -2,6 +2,10 @@ from .db_session import SqlAlchemyBase
 import sqlalchemy
 
 
+def parse_stages(stages: str) -> list[str]:
+    return stages.split(";")
+
+
 class Model(SqlAlchemyBase):
     __tablename__ = "models"
 
