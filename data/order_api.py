@@ -85,11 +85,14 @@ def update_order():
     if not order:
         return make_response(jsonify({'error': 'Not found'}), 404)
     data = request.json
-    user = db_sess.query(User).filter(User.id == data['stage_id'])
+
 
     parsed_stages = ord_ps(order.stages)
     if data["stage_id"] < 1 or data["stage_id"] >= len(parsed_stages):
         return make_response(jsonify({'error': 'Incorrect stage id'}), 400)
+    if parsed_stages[data["stage_id"]] == 0:
+        return make_response(jsonify({'error': "Can't complete stage with no elements on it"}), 400)
+
     parsed_stages[data['stage_id']] -= 1
     if data["state"] == 'OK':
         parsed_stages[data['stage_id'] + 1] += 1
@@ -100,3 +103,15 @@ def update_order():
     db_sess.commit()
 
     return jsonify({'success': 'OK'})
+
+
+@orders_blueprint.route("/api/close_order", methods=['DELETE'])
+def close_order():
+    if not password_ok(request.json["password"]):
+        return make_response(jsonify({'error': 'Incorrect Password'}), 400)
+
+    ord_id = request.json["order_id"]
+    sess = db_session.create_session()
+    sess.query(Order).filter(
+        (Order.id == ord_id)
+    ).delete()
