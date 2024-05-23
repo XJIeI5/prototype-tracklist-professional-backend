@@ -30,10 +30,6 @@
   </form>
 </seciton>
 <section class="calls">
-  {% set nameStages = ['Отрезная операция', 'Термическая обработка', 'Токарная
-  обработка', 'Сверлильная операция', 'Закалка током высокой частоты',
-  'Кругошлифованая обработка', 'Нанесение цинка', 'Маркировка', 'Выпуск готовой
-  продукции'] %}
   <h1>Ваши заказы</h1>
   {% for item in calls %}
   <div class="accordion">
@@ -52,12 +48,13 @@
         {% endfor %}
       </section>
       <section class="stages">
+        {% set cur_stage_index = loop.index-1 %}
         {% for i in item.stages.values() %}
         <div class="stage">
           <span class="stage-image {% if i > 0 %} active {% endif %}"
             >{{ loop.index }}</span
           >
-          {{nameStages[loop.index-1]}}
+          {{nameStages[cur_stage_index][loop.index-1]}}
           <span class="counter">{{i}} / {{item.productTotals}}</span>
         </div>
         {% endfor %}

@@ -2,7 +2,7 @@ import flask
 import json
 from sqlalchemy import exc
 from data import db_session
-from data import users, orders, order_api
+from data import users, orders, order_api, models
 from mock import calls_test
 from datetime import date
 
@@ -37,8 +37,13 @@ def login():
         users_orders = sess.query(orders.Order).filter(
             (orders.Order.userId == user.id) 
         ).all()
-        print(jsonify_user_orders(user_orders=users_orders))
-        return flask.render_template("login.html", calls=jsonify_user_orders(user_orders=users_orders))
+        nameStages = []
+        for order in users_orders:
+            name_stages = sess.query(models.Model).filter(
+                (models.Model.id == order.modelId)
+            ).first()
+            nameStages.append(models.parse_stages(name_stages.stages))
+        return flask.render_template("login.html", calls=jsonify_user_orders(user_orders=users_orders), nameStages=nameStages)
     except exc.NoResultFound:
         return "NO USER FOUND"
     return "OK"
