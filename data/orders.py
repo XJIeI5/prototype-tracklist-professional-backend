@@ -3,7 +3,7 @@ import sqlalchemy
 import datetime
 
 
-def parse_stages(stages: str) -> dict:
+def parse_stages(stages: str) -> dict[int:int]:
     res = {}
     for stage in stages.split(";"):
         s = stage.split(":")
