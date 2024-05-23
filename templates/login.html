@@ -30,7 +30,9 @@
   </form>
 </seciton>
 <section class="calls">
-  <h1>Ваши заказы</h1>
+  {% if calls|length != 0 %}
+    <h1>Ваши заказы</h1>
+  {% endif %}
   {% for item in calls %}
   <div class="accordion">
     <section class="accordion-header">
