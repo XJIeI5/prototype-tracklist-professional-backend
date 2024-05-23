@@ -1,7 +1,9 @@
+import datetime 
 import flask
 from flask import jsonify, make_response, request
 from data.orders import Order
 from data.users import User
+from data.models import Model, parse_stages as ps
 
 from . import db_session
 
@@ -11,6 +13,9 @@ orders_blueprint = flask.Blueprint(
     __name__,
     template_folder='templates'
 )
+
+def password_ok(password: str) -> bool:
+    return True
 
 
 def parse_stages(stages: str) -> dict:
@@ -25,8 +30,25 @@ def make_stages(parsed_stages: dict) -> str:
     return ','.join(a)
 
 
+def init_stages(modelId: int, amount: int) -> str:
+    sess = db_session.create_session()
+    stages_name = sess.query(Model).filter(
+        (Model.id == modelId)
+    ).first()
+
+    stages_amount = {}
+    stages_amount[1] = amount
+    for i in range(1, len(ps(stages_name.stages))):
+        stages_amount[i+1] = 0
+
+    res = ""
+    for key, value in stages_amount.items():
+        res += f"{key}:{value};"
+    return res[:-1]
+
+
 @orders_blueprint.route('/api/reg_order', methods=['POST'])
-def register_order(order_id):
+def register_order():
     db_sess = db_session.create_session()
     password = request.json["password"]
     if password_ok(password):
@@ -34,10 +56,10 @@ def register_order(order_id):
             modelId=request.json['modelId'],
             userId=request.json["userId"],
             amount=request.json["amount"],
-            dataCreate=request.json["dataCreate"],
-            dataExpected=request.json["dataExpected"],
+            dataCreate=datetime.datetime.today(),
+            dataExpected=datetime.datetime.strptime(request.json["dataExpected"], "%Y-%m-%d").date(),
             paid=request.json["paid"],
-            stages=request.json["stages"]
+            stages=init_stages(request.json['modelId'], request.json["amount"])
         )
         db_sess.add(order)
         db_sess.commit()
