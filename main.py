@@ -2,7 +2,7 @@ import flask
 import json
 from sqlalchemy import exc
 from data import db_session
-from data import users, orders
+from data import users, orders, order_api
 from mock import calls_test
 from datetime import date
 
@@ -16,14 +16,16 @@ def jsonify_user_orders(user_orders: list[orders.Order]) -> list[dict]:
 
 app = flask.Flask(__name__)
 
+
 @app.route("/")
 def index():
     return flask.redirect("/login")
 
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if flask.request.method == "GET":
-        return flask.render_template("login.html", calls=calls_test)
+        return flask.render_template("login.html", calls=[])
     
     email, phone, name = flask.request.form["email"], int(flask.request.form["phone"]), flask.request.form["name"]
     sess = db_session.create_session()
@@ -44,6 +46,7 @@ def login():
 
 def main():
     db_session.global_init("db/data.db")
+    app.register_blueprint(order_api.orders_blueprint)
     app.run(debug=True)
 
 
