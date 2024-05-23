@@ -1,9 +1,9 @@
 import datetime 
 import flask
 from flask import jsonify, make_response, request
-from data.orders import Order
+from data.orders import Order, parse_stages as ord_ps
 from data.users import User
-from data.models import Model, parse_stages as ps
+from data.models import Model, parse_stages as mod_ps
 
 from . import db_session
 
@@ -18,16 +18,9 @@ def password_ok(password: str) -> bool:
     return True
 
 
-def parse_stages(stages: str) -> dict:
-    parsed_stages = {}
-    for i in stages.split(';'):
-        parsed_stages[int(i.split(':')[0])] = int(i.split(':')[1])
-    return parsed_stages
-
-
 def make_stages(parsed_stages: dict) -> str:
     a = [f'{i}:{parsed_stages[i]}' for i in parsed_stages]
-    return ','.join(a)
+    return ';'.join(a)
 
 
 def init_stages(modelId: int, amount: int) -> str:
@@ -38,7 +31,7 @@ def init_stages(modelId: int, amount: int) -> str:
 
     stages_amount = {}
     stages_amount[1] = amount
-    for i in range(1, len(ps(stages_name.stages))):
+    for i in range(1, len(mod_ps(stages_name.stages))):
         stages_amount[i+1] = 0
 
     res = ""
@@ -69,7 +62,9 @@ def register_order():
 
 
 @orders_blueprint.route("/api/upd_order", methods=['PUT'])
-def update_order(order_id):
+def update_order():
+    if not password_ok(request.json["password"]):
+        return make_response(jsonify({'error': 'Incorrect Password'}), 400)
     order_id = request.json['order_id']
     try:
         order_id = int(order_id)
@@ -84,10 +79,12 @@ def update_order(order_id):
 
     if not order:
         return make_response(jsonify({'error': 'Not found'}), 404)
-    data = request.json()
+    data = request.json
     user = db_sess.query(User).filter(User.id == data['stage_id'])
 
-    parsed_stages = parse_stages(order.stages)
+    parsed_stages = ord_ps(order.stages)
+    if data["stage_id"] < 1 or data["stage_id"] >= len(parsed_stages):
+        return make_response(jsonify({'error': 'Incorrect stage id'}), 400)
     parsed_stages[data['stage_id']] -= 1
     if data["state"] == 'OK':
         parsed_stages[data['stage_id'] + 1] += 1
@@ -98,7 +95,3 @@ def update_order(order_id):
     db_sess.commit()
 
     return jsonify({'success': 'OK'})
-
-
-
-
