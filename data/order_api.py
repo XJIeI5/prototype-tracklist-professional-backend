@@ -1,4 +1,5 @@
-import datetime 
+import os
+import datetime
 import flask
 from flask import jsonify, make_response, request
 from data.orders import Order, parse_stages as ord_ps
@@ -7,6 +8,10 @@ from data.models import Model, parse_stages as mod_ps
 
 from . import db_session
 
+import dotenv
+dotenv.load_dotenv()
+
+WORKER_PASSWORD = os.getenv("WORKER_PASSWORD")
 
 orders_blueprint = flask.Blueprint(
     'order_api',
@@ -15,7 +20,7 @@ orders_blueprint = flask.Blueprint(
 )
 
 def password_ok(password: str) -> bool:
-    return True
+    return WORKER_PASSWORD == password
 
 
 def make_stages(parsed_stages: dict) -> str:
