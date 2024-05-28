@@ -1,6 +1,7 @@
 {% extends "base.html" %} {% block content %}
 <seciton class="form-wrapper">
   <h1>Клиент</h1>
+  {% if email == None %}
   <form action="" method="post" class="form">
     <div class="field">
       <label class="field-label" for="name"
@@ -28,6 +29,29 @@
     </div>
     <input type="submit" class="submit-btn" value="Поиск" />
   </form>
+  {% else %}
+  <form action="" method="" class="form">
+    <div class="field">
+      <label class="field-label" for="name">
+        <span style="color: red">*</span> ФИО:
+      </label>
+      <input class="field-input" type="name" name="name" id="name" value="{{ name }}" readonly />
+    </div>
+    <div class="field">
+      <label class="field-label" for="phone"
+        ><span style="color: red">*</span> Номер телефона:
+      </label>
+      <input class="field-input" type="tel" name="phone" id="phone" value="{{ phone }}" readonly />
+    </div>
+    <div class="field">
+      <label class="field-label" for="email"
+        ><span style="color: red">*</span> Элетронная почта:
+      </label>
+      <input class="field-input" type="email" name="email" id="email" value="{{ email }}" readonly />
+    </div>
+    <input type="submit" class="submit-btn" value="Выйти" />
+  </form>
+  {% endif %}
 </seciton>
 <section class="calls">
   {% if calls|length != 0 %}

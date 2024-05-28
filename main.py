@@ -25,7 +25,7 @@ def index():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if flask.request.method == "GET":
-        return flask.render_template("login.html", calls=[])
+        return flask.render_template("login.html", calls=[], email=None)
     
     email, phone, name = flask.request.form["email"], int(flask.request.form["phone"]), flask.request.form["name"]
     sess = db_session.create_session()
@@ -43,7 +43,12 @@ def login():
                 (models.Model.id == order.modelId)
             ).first()
             nameStages.append(models.parse_stages(name_stages.stages))
-        return flask.render_template("login.html", calls=jsonify_user_orders(user_orders=users_orders), nameStages=nameStages)
+        return flask.render_template("login.html",
+                                     calls=jsonify_user_orders(user_orders=users_orders),
+                                     nameStages=nameStages,
+                                     name=name,
+                                     phone=phone,
+                                     email=email)
     except exc.NoResultFound:
         return "NO USER FOUND"
     return "OK"
